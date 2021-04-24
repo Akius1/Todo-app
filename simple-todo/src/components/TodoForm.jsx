@@ -1,5 +1,5 @@
 import React from 'react';
-import useFormState from './Hooks/useInputsState'
+import useFormState from './Hooks/useInputsState';
 
 import Paper from "@material-ui/core/Paper";
 import TextField from "@material-ui/core/TextField";

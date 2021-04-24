@@ -8,6 +8,8 @@ import Grid from "@material-ui/core/Grid";
 import TodoList from "../components/TodoList";
 import TodoForm from "../components/TodoForm";
 
+import { v4 as uuid } from "uuid";
+
 function TodoApp() {
   const initialTodos = [
     { id: 1, task: "Pray", completed: false },
@@ -17,13 +19,27 @@ function TodoApp() {
   const [todos, setTodos] = useState(initialTodos);
 
   const addTodo = (newTodoText) => {
-    setTodos([...todos, { id: 4, task: newTodoText, completed: false }]);
+    setTodos([...todos, { id: uuid(), task: newTodoText, completed: false }]);
   };
-    const removeTodo = todoId => {
-        let updatedTodos = todos.filter(todo => todo.id !== todoId)
+  const removeTodo = (todoId) => {
+    let updatedTodos = todos.filter((todo) => todo.id !== todoId);
 
-        setTodos(updatedTodos)
-    }
+    setTodos(updatedTodos);
+  };
+  const toggleTodo = (todoId) => {
+    let updatedTodos = todos.map((todo) =>
+      todo.id === todoId ? { ...todo, completed: !todo.completed } : todo
+    );
+    setTodos(updatedTodos);
+  };
+    
+  const editTodo = (todoId, updatedTask) => {
+    let updatedTodos = todos.map((todo) =>
+      todo.id === todoId ? { ...todo, task: updatedTask } : todo
+    );
+    setTodos(updatedTodos);
+  };
+
 
   return (
     <Paper
@@ -40,10 +56,10 @@ function TodoApp() {
           <Typography color="inherit">TODOS</Typography>
         </Toolbar>
       </AppBar>
-      <Grid container justify='center' style={{marginTop: "1rem"}}>
+      <Grid container justify="center" style={{ marginTop: "1rem" }}>
         <Grid item xs={11} md={8} lg={8}>
           <TodoForm addTodo={addTodo} />
-          <TodoList todos={todos} removeTodo={removeTodo} />
+          <TodoList todos={todos} removeTodo={removeTodo} toggleTodo = {toggleTodo} editTodo = {editTodo} />
         </Grid>
       </Grid>
     </Paper>
